@@ -1,0 +1,14 @@
+MinerU/.git/
+MinerU/.github/
+MinerU/demo/
+MinerU/docker/
+MinerU/docs/
+MinerU/signatures/
+MinerU/*.egg-info/
+MinerU/.gitattributes
+MinerU/.gitignore
+MinerU/.pre-commit-config.yaml
+MinerU/.readthedocs.yaml
+MinerU/Dockerfile
+# Ignore generated files
+**/*.pyc

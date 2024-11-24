@@ -1,0 +1,38 @@
+ARG MAGIC_VERSION=0.10.0
+
+
+FROM pytorch/pytorch:2.3.1-cuda11.8-cudnn8-runtime
+
+ARG MAGIC_VERSION
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    python3-pip \
+    libgl1-mesa-glx \
+    libsm6 \
+    libxext6 \
+    libglib2.0-0 \
+    libxrender-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN pip3 install --upgrade pip
+
+COPY ./MinerU/projects/gradio_app /app/projects/gradio_app
+RUN pip3 install --no-cache-dir magic-pdf[full]==${MAGIC_VERSION} --extra-index-url https://wheels.myhloli.com
+RUN pip3 install --no-cache-dir gradio==5.6.0 gradio-pdf==0.0.19
+
+RUN conda create -n gpu -y python==3.10.14 --no-default-packages \
+    && mkdir -p /opt/conda/envs/gpu/etc/conda/activate.d \
+    && echo "export PYTHONPATH=/opt/conda/lib/python3.10/site-packages:$PYTHONPATH" > /opt/conda/envs/gpu/etc/conda/activate.d/add_base_path.sh
+RUN conda run --no-capture-output -n gpu python -m pip install --no-cache-dir paddlepaddle-gpu==3.0.0b1 -i https://www.paddlepaddle.org.cn/packages/stable/cu118/
+
+EXPOSE 7860
+
+VOLUME /root/.cache
+VOLUME /root/.paddleocr
+VOLUME /app/projects/gradio_app/output
+
+WORKDIR /app/projects/gradio_app
+
+CMD ["python", "/app/projects/gradio_app/app.py"]
