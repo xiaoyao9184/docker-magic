@@ -1,0 +1,46 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "python: huggingface download models",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/MinerU/scripts/download_models_hf.py",
+            "console": "integratedTerminal",
+            "env": {
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_ENDPOINT": "http://localhost:8090"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "python: magic_pdf cli",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/MinerU/magic_pdf/tools/cli.py",
+            "console": "integratedTerminal",
+            "env": {
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_ENDPOINT": "http://localhost:8090"
+            },
+            "args": [
+                "--path", "${workspaceFolder}/MinerU/demo/small_ocr.pdf",
+                "--output-dir", "${workspaceFolder}/results"
+            ],
+            "justMyCode": false
+        },
+        {
+            "name": "python: gradio app",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/MinerU/projects/gradio_app/app.py",
+            "console": "integratedTerminal",
+            "env": {
+                "XDG_CACHE_HOME": "${workspaceFolder}/cache",
+                "HF_ENDPOINT": "http://localhost:8090"
+            },
+            "cwd": "${workspaceFolder}/MinerU/projects/gradio_app",
+            "justMyCode": false
+        }
+    ]
+}
