@@ -1,0 +1,11 @@
+name: magic
+channels:
+  - conda-forge
+  - pytorch
+dependencies:
+  - python=3.10
+
+  - pytorch==2.3.1
+
+  - pip:
+    - -e ./MinerU --extra-index-url https://wheels.myhloli.com
