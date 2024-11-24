@@ -1,0 +1,20 @@
+
+
+services:
+  magic_app:
+    image: xiaoyao9184/magic:master
+    container_name: magic_pdf_app
+    command: conda run --no-capture-output -n gpu python /app/projects/gradio_app/app.py
+    ports:
+      - "7860:7860"
+    volumes:
+      - ./magic-pdf.json:/root/magic-pdf.json
+      - ./../../cache:/root/.cache
+      - ./../../cache/paddleocr:/root/.paddleocr
+      - ./../../results:/app/projects/gradio_app/output
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [ gpu ]
